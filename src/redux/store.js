@@ -1,6 +1,6 @@
  import {createStore, compose, applyMiddleware, combineReducers} from "redux";
 import thunk from "redux-thunk";
-import reTable from "./reducers/acTable";
+import reTable from "./reducers/reTable";
 
 const reducers = combineReducers({
     reTable

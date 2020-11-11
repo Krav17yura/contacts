@@ -4,10 +4,11 @@ export const fetchData = () => dispatch => {
         if (!response.ok) throw Error(response.statusText);
         return response.json();
     };
-    fetch("https://randomuser.me/api/?results=10")
+    fetch("https://randomuser.me/api/?results=100")
         .then(checkForError)
         .then(data => {
             dispatch(setData(data))
+            dispatch(setPaginationData(data))
         })
         .catch(error => {
             console.log("error", error);
@@ -16,6 +17,14 @@ export const fetchData = () => dispatch => {
         .finally(() => {
             dispatch(setLoad(false))
         });
+}
+
+
+export const setPaginationData = (data) => {
+    return{
+        type: "SET_PAGINATION_DATA",
+        payload: data
+    }
 }
 
 

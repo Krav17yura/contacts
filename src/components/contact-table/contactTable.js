@@ -23,7 +23,7 @@ const useStyle = makeStyles((theme) => ({
 const ContactTable = () => {
     const dispatch = useDispatch();
     const items = useSelector((state) => state.reTable.data.results)
-    console.log(items)
+    const paginationItems = useSelector((state) => state.reTable.paginationData.currentPosts)
 
     useEffect(() => {
         dispatch(fetchData())
@@ -45,7 +45,7 @@ const ContactTable = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {items && items.map(item =>
+                    {paginationItems && paginationItems.map(item =>
                             <TableRowItem
                             key={item.login.uuid}
                             {...item}
