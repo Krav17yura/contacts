@@ -1,14 +1,10 @@
 import React from "react";
 import IconButton from "@material-ui/core/IconButton";
-import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
-import Box from "@material-ui/core/Box";
 
 
-
-const PaginationItem = ({item}) => {
-    console.log(item)
+const PaginationItem = ({item, paginate}) => {
     return(
-        <IconButton aria-label="delete" size="small">
+        <IconButton aria-label="delete" size="small" onClick={() => paginate(item)}>
             {item}
         </IconButton>
     )

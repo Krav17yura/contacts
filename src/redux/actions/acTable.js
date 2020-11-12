@@ -9,6 +9,7 @@ export const fetchData = () => dispatch => {
         .then(data => {
             dispatch(setData(data))
             dispatch(setPaginationData(data))
+            dispatch(setStatistic(data))
         })
         .catch(error => {
             console.log("error", error);
@@ -20,9 +21,24 @@ export const fetchData = () => dispatch => {
 }
 
 
+
 export const setPaginationData = (data) => {
     return{
         type: "SET_PAGINATION_DATA",
+        payload: data
+    }
+}
+
+export const changePaginationPage = (numberOfPage) => {
+    return{
+        type: 'CHANGE_PAGINATION_PAGE',
+        payload: numberOfPage
+    }
+}
+
+export const setStatistic = (data) => {
+    return{
+        type: "SET_STATISTIC",
         payload: data
     }
 }

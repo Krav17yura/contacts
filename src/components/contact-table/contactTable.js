@@ -22,7 +22,6 @@ const useStyle = makeStyles((theme) => ({
 
 const ContactTable = () => {
     const dispatch = useDispatch();
-    const items = useSelector((state) => state.reTable.data.results)
     const paginationItems = useSelector((state) => state.reTable.paginationData.currentPosts)
 
     useEffect(() => {

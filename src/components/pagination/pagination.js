@@ -5,8 +5,9 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import IconButton from "@material-ui/core/IconButton";
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import PaginationItem from "../pagination-item";
+import {changePaginationPage} from "../../redux/actions/acTable";
 
 const useStyle = makeStyles((theme) => ({
     root:{
@@ -16,7 +17,12 @@ const useStyle = makeStyles((theme) => ({
 
 const Pagination = () => {
     const classes = useStyle();
+    const dispatch = useDispatch()
     const numberOfPages = useSelector((state) => state.reTable.paginationData.pageNumber)
+
+    const paginate = (number) => {
+        dispatch(changePaginationPage(number))
+    }
     return (
         <Grid container justify={"flex-end"}  className={classes.root}>
             <Box>
@@ -26,7 +32,8 @@ const Pagination = () => {
                 {numberOfPages && numberOfPages.map((item) =>
                     <PaginationItem
                     key={item}
-                    item={item}/>
+                    item={item}
+                    paginate={paginate}/>
                 )}
                 <IconButton aria-label="delete" size="small">
                     <ArrowForwardIosIcon fontSize="inherit"/>

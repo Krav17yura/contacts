@@ -1,5 +1,3 @@
-
-
 const reTable = (state = {
     data: [],
     tableItemsStatus: {
@@ -11,6 +9,14 @@ const reTable = (state = {
         contactsPerPage: 10,
         currentPosts: [],
         pageNumber: []
+    },
+    static: {
+        collectionSize: 1,
+        males: 0,
+        females: 0,
+        indeterminate: 0,
+        predominate: '',
+        nationalities: []
     }
 }, action) => {
     switch (action.type) {
@@ -27,7 +33,7 @@ const reTable = (state = {
             const indexOfFirstPost = indexOfLastPost - state.paginationData.contactsPerPage;
             const currentPosts = data.results.slice(indexOfFirstPost, indexOfLastPost)
 
-            for(let i = 1; i <= Math.ceil(data.results.length / state.paginationData.contactsPerPage); i++){
+            for (let i = 1; i <= Math.ceil(data.results.length / state.paginationData.contactsPerPage); i++) {
                 pageNumber.push(i)
             }
 
@@ -37,6 +43,20 @@ const reTable = (state = {
                     ...state.paginationData,
                     currentPosts,
                     pageNumber
+                }
+            }
+        }
+        case 'CHANGE_PAGINATION_PAGE': {
+            const indexOfLastPost = action.payload * state.paginationData.contactsPerPage;
+            const indexOfFirstPost = indexOfLastPost - state.paginationData.contactsPerPage;
+            const currentPosts = state.data.results.slice(indexOfFirstPost, indexOfLastPost)
+
+            return {
+                ...state,
+                paginationData: {
+                    ...state.paginationData,
+                    currentPosts,
+                    currentPage: action.payload
                 }
             }
         }
@@ -56,6 +76,47 @@ const reTable = (state = {
                     ...state.tableItemsStatus,
                     error: action.payload
                 }
+            }
+        }
+        case 'SET_STATISTIC': {
+            const data = action.payload.results
+            console.log(data)
+            const collectionSize = data.length
+            const males = data.filter(item => item.gender === 'male').length
+            const females = collectionSize - males
+            const predominate = () => (males > females) ? "Men" : "Woman"
+
+            const nationalities = (itemsData) => {
+                const newMass = []
+
+                itemsData.forEach((item) => {
+                     newMass.push(item.location.country)
+                });
+
+                const mapped = newMass.reduce((acc, item) => {
+                    if (acc.hasOwnProperty(item)){
+                        acc[item]++
+                    } else{
+                        acc[item] = 1
+                    }
+                    return acc
+                }, {});
+                return  Object.entries(mapped)
+            }
+
+
+            console.log(nationalities(data))
+            return {
+                ...state,
+                static: {
+                    ...state.static,
+                    collectionSize,
+                    males,
+                    females,
+                    predominate: predominate(),
+                    nationalities: nationalities(data)
+                }
+
             }
         }
         default:
