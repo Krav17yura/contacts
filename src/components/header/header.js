@@ -9,6 +9,8 @@ import AppsIcon from "@material-ui/icons/Apps";
 import FormatAlignJustifyIcon from "@material-ui/icons/FormatAlignJustify";
 import Container from "@material-ui/core/Container";
 import {makeStyles} from "@material-ui/core/styles";
+import {useDispatch} from "react-redux";
+import {fetchData} from "../../redux/actions/acTable";
 
 const useStyles = makeStyles((theme) => ({
     headerTitle: {
@@ -25,6 +27,12 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+
+    const onContactsReload = () => {
+        dispatch(fetchData())
+    }
+
     return(
         <Grid container item xs={12} alignItems="baseline">
             <Grid className={classes.test} >
@@ -34,7 +42,7 @@ const Header = () => {
             </Grid>
 
             <Grid >
-                <IconButton aria-label="delete"  className={classes.headerButton} >
+                <IconButton aria-label="delete"  className={classes.headerButton} onClick={() => onContactsReload()} >
                     <ReplayRoundedIcon />
                 </IconButton>
 

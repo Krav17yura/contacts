@@ -80,7 +80,6 @@ const reTable = (state = {
         }
         case 'SET_STATISTIC': {
             const data = action.payload.results
-            console.log(data)
             const collectionSize = data.length
             const males = data.filter(item => item.gender === 'male').length
             const females = collectionSize - males
@@ -104,8 +103,6 @@ const reTable = (state = {
                 return  Object.entries(mapped)
             }
 
-
-            console.log(nationalities(data))
             return {
                 ...state,
                 static: {

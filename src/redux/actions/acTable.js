@@ -4,7 +4,7 @@ export const fetchData = () => dispatch => {
         if (!response.ok) throw Error(response.statusText);
         return response.json();
     };
-    fetch("https://randomuser.me/api/?results=100")
+    fetch("https://randomuser.me/api/?results=52")
         .then(checkForError)
         .then(data => {
             dispatch(setData(data))
