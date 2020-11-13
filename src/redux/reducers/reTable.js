@@ -63,16 +63,32 @@ const reTable = (state = {
         case 'SORT_DATA':{
             const data = state.data
             const searchInput = state.sortBar.searchInput;
+            const sortGenderValue = state.sortBar.genderSelectValue
 
             const filterSearch = data.filter((item) => {
                 return Object.values(item.name).join(' ').toLowerCase().indexOf(searchInput.toLowerCase().trim()) > -1
             })
 
+
+
+          const onFilterByGender = (arr, filter)  => {
+                switch (filter) {
+                    case '':
+                        return arr;
+                    case "Female":
+                        return arr.filter((item) => item.gender === "female");
+                    case 'Male':
+                        return arr.filter((item) => item.gender === "male");
+                    default:
+                        return arr;
+                }
+            }
+
             return {
                 ...state,
                 sortBar: {
                     ...state.sortBar,
-                    sortedData: filterSearch
+                    sortedData: onFilterByGender(filterSearch, sortGenderValue)
                 }
             }
         }

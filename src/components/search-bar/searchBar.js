@@ -54,6 +54,7 @@ const SearchBar = () => {
 
     const changeGenderSelectValue = (value) => {
         dispatch(setGenderSelectValue(value))
+        dispatch(sortContacts())
     }
 
     const changeNationalityInputValue = (value) => {
@@ -67,7 +68,7 @@ const SearchBar = () => {
     }
 
     const onSortingData = () => {
-        dispatch(sortData())
+        dispatch(sortContacts())
     }
 
 
