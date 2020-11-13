@@ -1,5 +1,5 @@
 export const fetchData = () => dispatch => {
-    dispatch(setLoad(true));
+    dispatch(setLoad(false));
     const checkForError = response => {
         if (!response.ok) throw Error(response.statusText);
         return response.json();
@@ -10,13 +10,14 @@ export const fetchData = () => dispatch => {
             dispatch(setData(data))
             dispatch(setPaginationData())
             dispatch(setStatistic())
+            dispatch(setError(true))
         })
         .catch(error => {
             console.log("error", error);
-            dispatch(setError(true))
+            dispatch(setError(false))
         })
         .finally(() => {
-            dispatch(setLoad(false))
+            dispatch(setLoad(true))
         });
 }
 

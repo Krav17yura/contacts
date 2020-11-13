@@ -5,6 +5,8 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import {useSelector} from "react-redux";
+import Loader from "../loading/loading";
+import AppError from "../app-error";
 
 const useStyle = makeStyles((theme) => ({
     root: {
@@ -35,11 +37,14 @@ const useStyle = makeStyles((theme) => ({
 
 const Statistic = () => {
     const {males, females, collectionSize, predominate, nationalities} = useSelector(({reTable}) => reTable.static)
+    const {load, error} = useSelector(({reTable}) => reTable.tableItemsStatus)
     const classes = useStyle();
     return (
         <Container className={classes.root}>
             <Grid>
                 <Typography variant='h4' className={classes.statisticTitle}>Statistic</Typography>
+                {error? <>
+                {load? <>
                 <Grid container>
                     <Grid className={classes.statisticNameBlock}>
                         <Typography variant='subtitle1' className={classes.statisticName}>
@@ -93,6 +98,14 @@ const Statistic = () => {
                         )
                     }
                 </Grid>
+                </>:<Loader/> }
+                </>:
+                  <>
+                      <AppError/>
+                      <Typography variant='h5' >
+                          Something going wrong, let`s try this again
+                      </Typography>
+                  </> }
             </Grid>
         </Container>
     )

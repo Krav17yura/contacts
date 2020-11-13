@@ -1,8 +1,8 @@
 const reTable = (state = {
     data: [],
     tableItemsStatus: {
-        load: false,
-        error: false
+        load: true,
+        error: true
     },
     paginationData: {
         currentPage: 1,
@@ -65,7 +65,6 @@ const reTable = (state = {
             const searchInput = state.sortBar.searchInput;
             const sortGenderValue = state.sortBar.genderSelectValue
             const nationalityInputValue = state.sortBar.nationalityValue
-            console.log(nationalityInputValue)
 
             const filterSearch = data.filter((item) => {
                 return Object.values(item.name).join(' ').toLowerCase().indexOf(searchInput.toLowerCase().trim()) > -1
