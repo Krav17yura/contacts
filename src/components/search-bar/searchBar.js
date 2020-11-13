@@ -13,12 +13,18 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
 import Select from "@material-ui/core/Select";
 import ClearIcon from '@material-ui/icons/Clear';
-
+import {useDispatch, useSelector} from "react-redux";
+import {
+    setSearchByNameInputValue,
+    setGenderSelectValue,
+    setNationalityInputValue,
+    clearSortBarInputValue, sortData
+} from "../../redux/actions/acTable";
 
 
 const useStyle = makeStyles((theme) => ({
-    main:{
-      flex: 1
+    main: {
+        flex: 1
     },
     root: {
         boxSizing: "border-box",
@@ -34,33 +40,55 @@ const useStyle = makeStyles((theme) => ({
         minWidth: 200,
     },
 
-
 }))
 
 const SearchBar = () => {
     const classes = useStyle();
-    const [age, setAge] = React.useState('');
+    const dispatch = useDispatch();
+    const {searchInput, genderSelectValue, nationalityValue} = useSelector(({reTable}) => reTable.sortBar)
 
-    const handleChange = (event) => {
-        setAge(event.target.value);
-    };
+    const searchInputValueChange = (value) => {
+        dispatch(setSearchByNameInputValue(value))
+        dispatch(sortData())
+    }
+
+    const changeGenderSelectValue = (value) => {
+        dispatch(setGenderSelectValue(value))
+    }
+
+    const changeNationalityInputValue = (value) => {
+        dispatch(setNationalityInputValue(value))
+        dispatch(sortData())
+    }
+
+    const clearAllInputValue = () => {
+        dispatch(clearSortBarInputValue())
+        dispatch(sortData())
+    }
+
+    const onSortingData = () => {
+        dispatch(sortData())
+    }
+
 
     return (
         <Container className={classes.root}>
             <Box className={classes.insideBlock}>
                 <Grid container item xs={12} alignItems={"center"}>
                     <Grid className={classes.main}>
-                        <FormControl   variant="outlined">
+                        <FormControl variant="outlined">
                             <InputLabel htmlFor="outlined-adornment-password">Search by full name</InputLabel>
                             <OutlinedInput
                                 id="outlined-adornment-password"
                                 type={'text'}
-                                value=''
+                                value={searchInput}
+                                onChange={event => searchInputValueChange(event.target.value)}
                                 endAdornment={
                                     <InputAdornment position="end">
                                         <IconButton
                                             aria-label="toggle password visibility"
                                             edge="end"
+                                            onClick={() => onSortingData()}
                                         >
                                             <SearchIcon/>
                                         </IconButton>
@@ -74,22 +102,28 @@ const SearchBar = () => {
                             <Select
                                 native
                                 label="Gender"
-                                value={age}
-                                onChange={handleChange}
+                                value={genderSelectValue}
+                                onChange={event => changeGenderSelectValue(event.target.value)}
                             >
-                                <option aria-label="None" value="" />
-                                <option value={1}>Ten</option>
-                                <option value={2}>Twenty</option>
-                                <option value={1}>Thirty</option>
+                                <option aria-label="None" value=""/>
+                                <option value={"Male"}>Male</option>
+                                <option value={"Female"}>Female</option>
                             </Select>
                         </FormControl>
-                        <TextField id="outlined-basic" label="Nationality" variant="outlined" className={classes.formControl} />
+                        <TextField
+                            id="outlined-basic"
+                            label="Nationality"
+                            variant="outlined"
+                            className={classes.formControl}
+                            value={nationalityValue}
+                            onChange={event => changeNationalityInputValue(event.target.value)}/>
                     </Grid>
 
                     <Grid>
                         <Button
                             className={classes.button}
-                            startIcon={<ClearIcon />}
+                            onClick={() => clearAllInputValue()}
+                            startIcon={<ClearIcon/>}
                         >
                             Clear
                         </Button>

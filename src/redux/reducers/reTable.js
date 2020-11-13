@@ -17,7 +17,14 @@ const reTable = (state = {
         indeterminate: 0,
         predominate: '',
         nationalities: []
+    },
+    sortBar:{
+        searchInput: '',
+        genderSelectValue: "",
+        nationalityValue: '',
+        sortedData: []
     }
+
 }, action) => {
     switch (action.type) {
         case 'SET_DATA': {
@@ -46,6 +53,62 @@ const reTable = (state = {
                 }
             }
         }
+
+        case 'SORT_DATA':{
+            const data = state.data.results
+            const searchInput = state.sortBar.searchInput;
+
+            const filterSearch = data.filter((item) => {
+                return Object.values(item.name).join(' ').toLowerCase().indexOf(searchInput.toLowerCase().trim()) > -1
+            })
+            console.log(filterSearch)
+
+
+            return {
+                ...state,
+            }
+        }
+
+        case 'CLEAR_SORT_BAR_INPUT_VALUE':{
+            return{
+                ...state,
+                sortBar: {
+                    ...state.sortBar,
+                    searchInput: '',
+                    genderSelectValue: '',
+                    nationalityValue: ''
+                }
+            }
+        }
+
+        case 'SET_SEARCH_BY_NAME_INPUT_VALUE':{
+            return {
+                ...state,
+                sortBar: {
+                    ...state.sortBar,
+                    searchInput: action.payload
+                }
+            }
+        }
+        case 'SET_GENDER_SELECT_VALUE':{
+            return {
+                ...state,
+                sortBar: {
+                    ...state.sortBar,
+                    genderSelectValue: action.payload
+                }
+            }
+        }
+        case 'SET_NATIONALITY_INPUT_VALUE':{
+            return {
+                ...state,
+                sortBar: {
+                    ...state.sortBar,
+                    nationalityValue: action.payload
+                }
+            }
+        }
+
         case 'CHANGE_PAGINATION_PAGE': {
             const indexOfLastPost = action.payload * state.paginationData.contactsPerPage;
             const indexOfFirstPost = indexOfLastPost - state.paginationData.contactsPerPage;
