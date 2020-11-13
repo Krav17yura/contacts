@@ -18,7 +18,7 @@ const reTable = (state = {
         predominate: '',
         nationalities: []
     },
-    sortBar:{
+    sortBar: {
         searchInput: '',
         genderSelectValue: "",
         nationalityValue: '',
@@ -60,18 +60,19 @@ const reTable = (state = {
             }
         }
 
-        case 'SORT_DATA':{
+        case 'SORT_DATA': {
             const data = state.data
             const searchInput = state.sortBar.searchInput;
             const sortGenderValue = state.sortBar.genderSelectValue
+            const nationalityInputValue = state.sortBar.nationalityValue
+            console.log(nationalityInputValue)
 
             const filterSearch = data.filter((item) => {
                 return Object.values(item.name).join(' ').toLowerCase().indexOf(searchInput.toLowerCase().trim()) > -1
             })
 
 
-
-          const onFilterByGender = (arr, filter)  => {
+            const onFilterByGender = (arr, filter) => {
                 switch (filter) {
                     case '':
                         return arr;
@@ -84,17 +85,23 @@ const reTable = (state = {
                 }
             }
 
+            const onFilterNationality = (arr, filter) => {
+                if (filter.trim() !== '') {
+                    return  arr.filter(item => item.nat.toLowerCase().indexOf(filter.toLowerCase().trim()) > -1)
+                } else return arr
+            }
+
             return {
                 ...state,
                 sortBar: {
                     ...state.sortBar,
-                    sortedData: onFilterByGender(filterSearch, sortGenderValue)
+                    sortedData: onFilterByGender(onFilterNationality(filterSearch,nationalityInputValue), sortGenderValue)
                 }
             }
         }
 
-        case 'CLEAR_SORT_BAR_INPUT_VALUE':{
-            return{
+        case 'CLEAR_SORT_BAR_INPUT_VALUE': {
+            return {
                 ...state,
                 sortBar: {
                     ...state.sortBar,
@@ -105,7 +112,7 @@ const reTable = (state = {
             }
         }
 
-        case 'SET_SEARCH_BY_NAME_INPUT_VALUE':{
+        case 'SET_SEARCH_BY_NAME_INPUT_VALUE': {
             return {
                 ...state,
                 sortBar: {
@@ -114,7 +121,7 @@ const reTable = (state = {
                 }
             }
         }
-        case 'SET_GENDER_SELECT_VALUE':{
+        case 'SET_GENDER_SELECT_VALUE': {
             return {
                 ...state,
                 sortBar: {
@@ -123,7 +130,7 @@ const reTable = (state = {
                 }
             }
         }
-        case 'SET_NATIONALITY_INPUT_VALUE':{
+        case 'SET_NATIONALITY_INPUT_VALUE': {
             return {
                 ...state,
                 sortBar: {
@@ -176,18 +183,18 @@ const reTable = (state = {
                 const newMass = []
 
                 itemsData.forEach((item) => {
-                     newMass.push(item.location.country)
+                    newMass.push(item.location.country)
                 });
 
                 const mapped = newMass.reduce((acc, item) => {
-                    if (acc.hasOwnProperty(item)){
+                    if (acc.hasOwnProperty(item)) {
                         acc[item]++
-                    } else{
+                    } else {
                         acc[item] = 1
                     }
                     return acc
                 }, {});
-                return  Object.entries(mapped)
+                return Object.entries(mapped)
             }
 
             return {

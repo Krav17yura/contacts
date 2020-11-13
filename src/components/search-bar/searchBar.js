@@ -59,12 +59,12 @@ const SearchBar = () => {
 
     const changeNationalityInputValue = (value) => {
         dispatch(setNationalityInputValue(value))
-        dispatch(sortData())
+        dispatch(sortContacts())
     }
 
     const clearAllInputValue = () => {
         dispatch(clearSortBarInputValue())
-        dispatch(sortData())
+        dispatch(sortContacts())
     }
 
     const onSortingData = () => {

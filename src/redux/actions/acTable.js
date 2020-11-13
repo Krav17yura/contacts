@@ -27,7 +27,7 @@ export const sortContacts = () => dispatch => {
 }
 
 export const setSearchByNameInputValue = (value) => {
-    console.log(value)
+
     return {
         type: 'SET_SEARCH_BY_NAME_INPUT_VALUE',
         payload: value
@@ -35,7 +35,7 @@ export const setSearchByNameInputValue = (value) => {
 }
 
 export const setGenderSelectValue = (value) => {
-    console.log(value)
+
     return {
         type: 'SET_GENDER_SELECT_VALUE',
         payload: value
@@ -43,7 +43,7 @@ export const setGenderSelectValue = (value) => {
 }
 
 export const setNationalityInputValue = (value) => {
-    console.log(value)
+
     return {
         type: 'SET_NATIONALITY_INPUT_VALUE',
         payload: value
