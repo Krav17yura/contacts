@@ -18,7 +18,7 @@ import {
     setSearchByNameInputValue,
     setGenderSelectValue,
     setNationalityInputValue,
-    clearSortBarInputValue, sortData
+    clearSortBarInputValue, sortData, sortContacts
 } from "../../redux/actions/acTable";
 
 
@@ -49,7 +49,7 @@ const SearchBar = () => {
 
     const searchInputValueChange = (value) => {
         dispatch(setSearchByNameInputValue(value))
-        dispatch(sortData())
+        dispatch(sortContacts())
     }
 
     const changeGenderSelectValue = (value) => {

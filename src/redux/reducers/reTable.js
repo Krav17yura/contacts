@@ -28,19 +28,25 @@ const reTable = (state = {
 }, action) => {
     switch (action.type) {
         case 'SET_DATA': {
+            const data = action.payload
+
             return {
                 ...state,
-                data: action.payload
+                data: data.results,
+                sortBar: {
+                    ...state.sortBar,
+                    sortedData: data.results
+                }
             }
         }
         case 'SET_PAGINATION_DATA': {
             const pageNumber = []
-            const data = action.payload
+            const data = state.sortBar.sortedData
             const indexOfLastPost = state.paginationData.currentPage * state.paginationData.contactsPerPage;
             const indexOfFirstPost = indexOfLastPost - state.paginationData.contactsPerPage;
-            const currentPosts = data.results.slice(indexOfFirstPost, indexOfLastPost)
+            const currentPosts = data.slice(indexOfFirstPost, indexOfLastPost)
 
-            for (let i = 1; i <= Math.ceil(data.results.length / state.paginationData.contactsPerPage); i++) {
+            for (let i = 1; i <= Math.ceil(data.length / state.paginationData.contactsPerPage); i++) {
                 pageNumber.push(i)
             }
 
@@ -55,17 +61,19 @@ const reTable = (state = {
         }
 
         case 'SORT_DATA':{
-            const data = state.data.results
+            const data = state.data
             const searchInput = state.sortBar.searchInput;
 
             const filterSearch = data.filter((item) => {
                 return Object.values(item.name).join(' ').toLowerCase().indexOf(searchInput.toLowerCase().trim()) > -1
             })
-            console.log(filterSearch)
-
 
             return {
                 ...state,
+                sortBar: {
+                    ...state.sortBar,
+                    sortedData: filterSearch
+                }
             }
         }
 
@@ -112,7 +120,7 @@ const reTable = (state = {
         case 'CHANGE_PAGINATION_PAGE': {
             const indexOfLastPost = action.payload * state.paginationData.contactsPerPage;
             const indexOfFirstPost = indexOfLastPost - state.paginationData.contactsPerPage;
-            const currentPosts = state.data.results.slice(indexOfFirstPost, indexOfLastPost)
+            const currentPosts = state.sortBar.sortedData.slice(indexOfFirstPost, indexOfLastPost)
 
             return {
                 ...state,
@@ -142,7 +150,7 @@ const reTable = (state = {
             }
         }
         case 'SET_STATISTIC': {
-            const data = action.payload.results
+            const data = state.sortBar.sortedData
             const collectionSize = data.length
             const males = data.filter(item => item.gender === 'male').length
             const females = collectionSize - males

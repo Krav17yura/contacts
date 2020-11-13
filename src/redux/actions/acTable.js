@@ -8,8 +8,8 @@ export const fetchData = () => dispatch => {
         .then(checkForError)
         .then(data => {
             dispatch(setData(data))
-            dispatch(setPaginationData(data))
-            dispatch(setStatistic(data))
+            dispatch(setPaginationData())
+            dispatch(setStatistic())
         })
         .catch(error => {
             console.log("error", error);
@@ -18,6 +18,12 @@ export const fetchData = () => dispatch => {
         .finally(() => {
             dispatch(setLoad(false))
         });
+}
+
+export const sortContacts = () => dispatch => {
+    dispatch(sortData())
+    dispatch(setPaginationData())
+    dispatch(setStatistic())
 }
 
 export const setSearchByNameInputValue = (value) => {
@@ -50,14 +56,13 @@ export const clearSortBarInputValue = () => {
     }
 }
 
+
+
 export const sortData = () => {
     return{
         type: 'SORT_DATA'
     }
 }
-
-
-
 
 
 export const setPaginationData = (data) => {
