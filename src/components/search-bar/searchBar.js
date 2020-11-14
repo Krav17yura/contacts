@@ -46,6 +46,8 @@ const SearchBar = () => {
     const classes = useStyle();
     const dispatch = useDispatch();
     const {searchInput, genderSelectValue, nationalityValue} = useSelector(({reTable}) => reTable.sortBar)
+    const pageNumber = useSelector((state) => state.reTable.paginationData.pageNumber)
+    console.log("render")
 
     const searchInputValueChange = (value) => {
         dispatch(setSearchByNameInputValue(value))
@@ -78,7 +80,7 @@ const SearchBar = () => {
                 <Grid container item xs={12} alignItems={"center"}>
                     <Grid className={classes.main}>
                         <FormControl variant="outlined">
-                            <InputLabel htmlFor="outlined-adornment-password">Search by full name</InputLabel>
+                            <InputLabel htmlFor="outlined-adornment-password">Name</InputLabel>
                             <OutlinedInput
                                 id="outlined-adornment-password"
                                 type={'text'}

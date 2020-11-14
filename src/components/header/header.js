@@ -9,7 +9,7 @@ import AppsIcon from "@material-ui/icons/Apps";
 import FormatAlignJustifyIcon from "@material-ui/icons/FormatAlignJustify";
 import {makeStyles} from "@material-ui/core/styles";
 import {useDispatch} from "react-redux";
-import {fetchData} from "../../redux/actions/acTable";
+import {clearSortBarInputValue, fetchData} from "../../redux/actions/acTable";
 
 const useStyles = makeStyles((theme) => ({
     headerTitle: {
@@ -30,6 +30,7 @@ const Header = () => {
 
     const onContactsReload = () => {
         dispatch(fetchData())
+        dispatch(clearSortBarInputValue())
     }
 
     return(
@@ -46,12 +47,12 @@ const Header = () => {
                 </IconButton>
 
                 <ButtonGroup  size='small'   >
-                    <Button>
+                    <Button >
                         <AppsIcon/>
                     </Button>
-                    <Button>
+                    <Button color={"primary"}>
                         <FormatAlignJustifyIcon />
-                    </Button>
+                    </Button >
                 </ButtonGroup>
             </Grid>
         </Grid>
