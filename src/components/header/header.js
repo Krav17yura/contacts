@@ -46,14 +46,7 @@ const Header = () => {
                     <ReplayRoundedIcon />
                 </IconButton>
 
-                <ButtonGroup  size='small'   >
-                    <Button >
-                        <AppsIcon/>
-                    </Button>
-                    <Button color={"primary"}>
-                        <FormatAlignJustifyIcon />
-                    </Button >
-                </ButtonGroup>
+
             </Grid>
         </Grid>
     )

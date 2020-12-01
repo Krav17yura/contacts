@@ -5,7 +5,7 @@ import Header from "../../components/header";
 import SearchBar from "../../components/search-bar";
 import ContactTable from "../../components/contact-table";
 import Statistic from "../../components/statistic";
-import Pagination from "../../components/pagination";
+import AppPagination from "../../components/pagination";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -22,7 +22,7 @@ const Contacts = () => {
          <SearchBar/>
          <ContactTable/>
          <Statistic/>
-         <Pagination/>
+         <AppPagination/>
         </Container>
     )
 };

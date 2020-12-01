@@ -8,7 +8,7 @@ const reTable = (state = {
         currentPage: 1,
         contactsPerPage: 10,
         currentPosts: [],
-        pageNumber: []
+        pageNumber: 1
     },
     static: {
         collectionSize: 1,
@@ -40,15 +40,12 @@ const reTable = (state = {
             }
         }
         case 'SET_PAGINATION_DATA': {
-            const pageNumber = []
+
             const data = state.sortBar.sortedData
             const indexOfLastPost = state.paginationData.currentPage * state.paginationData.contactsPerPage;
             const indexOfFirstPost = indexOfLastPost - state.paginationData.contactsPerPage;
             const currentPosts = data.slice(indexOfFirstPost, indexOfLastPost)
-
-            for (let i = 1; i <= Math.ceil(data.length / state.paginationData.contactsPerPage); i++) {
-                pageNumber.push(i)
-            }
+            const pageNumber = Math.ceil(data.length/ state.paginationData.contactsPerPage)
 
             return {
                 ...state,

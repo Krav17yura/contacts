@@ -1,3 +1,3 @@
-import Pagination from "./pagination";
+import AppPagination from "./pagination";
 
-export default Pagination;
+export default AppPagination;
